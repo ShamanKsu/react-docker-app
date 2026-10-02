@@ -1,70 +1,83 @@
-# Getting Started with Create React App
+# React ToDo List — Docker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Простое React-приложение для создания и управления списком задач.
 
-## Available Scripts
+## Возможности
 
-In the project directory, you can run:
+* добавление новых задач;
+* отметка задач как выполненных;
+* удаление задач;
+* отображение количества выполненных задач;
+* запуск приложения в Docker-контейнере.
 
-### `npm start`
+## Используемые технологии
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* React
+* JavaScript
+* Node.js
+* Docker
+* Nginx
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Запуск без Docker
 
-### `npm test`
+Установить зависимости:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm install
+```
 
-### `npm run build`
+Запустить приложение:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+После запуска приложение доступно по адресу:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```text
+http://localhost:3000
+```
 
-### `npm run eject`
+## Сборка Docker-образа
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Для создания Docker-образа необходимо выполнить:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+docker build -t react-todo .
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Запуск Docker-контейнера
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Запустить контейнер:
 
-## Learn More
+```bash
+docker run -p 8080:80 react-todo
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+После запуска приложение доступно по адресу:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```text
+http://localhost:8080
+```
 
-### Code Splitting
+## Архитектура Docker
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Проект использует многоступенчатую сборку Docker-образа.
 
-### Analyzing the Bundle Size
+На первом этапе используется `node:alpine`. Устанавливаются зависимости проекта и выполняется production-сборка React-приложения с помощью команды:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+npm run build
+```
 
-### Making a Progressive Web App
+На втором этапе используется `nginx:alpine`. Собранные статические файлы React-приложения копируются в:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```text
+/usr/share/nginx/html
+```
 
-### Advanced Configuration
+После этого Nginx запускает приложение на 80 порту контейнера.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Скриншот приложения
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![Работа приложения](![alt text](image.png))
