@@ -80,4 +80,4 @@ npm run build
 
 ## Скриншот приложения
 
-![Работа приложения](![alt text](image.png))
+![Работа приложения](screenshots/image.png)
